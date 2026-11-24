@@ -17,6 +17,8 @@ import tempfile
 
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
+import tkinter.font as tkfont
+import webbrowser
 
 try:
     from tkinterdnd2 import TkinterDnD, DND_FILES
@@ -43,6 +45,9 @@ VIDEO_EXTS = {
 CREATE_NO_WINDOW = 0x08000000 if os.name == "nt" else 0
 
 AUDIO_MP4_OK = {"aac", "mp3", "ac3", "eac3", "alac", "mp2"}
+
+CREDIT_TEXT = "©灵魂调音师"
+CREDIT_URL = "https://space.bilibili.com/21205390"
 
 
 # ---------------------------------------------------------------- ffmpeg 定位
@@ -983,7 +988,9 @@ class App(object):
     # ---------- 界面 ----------
     def _build_ui(self):
         outer = tk.Frame(self.root, bg=self.BG)
-        outer.pack(fill="both", expand=True, padx=18, pady=(16, 14))
+        sc_pad = int(18 * self._ui_scale())
+        outer.pack(fill="both", expand=True, padx=sc_pad,
+                   pady=(int(16 * self._ui_scale()), int(14 * self._ui_scale())))
         outer.columnconfigure(0, weight=1)
 
         # 头部
@@ -996,6 +1003,15 @@ class App(object):
         self.sub_label.grid(row=1, column=0, sticky="w", pady=(2, 0))
         self.gpu_label = ttk.Label(head, text="", style="Sub.TLabel")
         self.gpu_label.grid(row=0, column=1, rowspan=2, sticky="e")
+
+        # 右下角署名，点击打开 B 站主页
+        self.credit_label = tk.Label(head, text=CREDIT_TEXT, bg=self.BG,
+                                     fg=self.ACCENT, cursor="hand2",
+                                     font=("Microsoft YaHei UI", 8, "underline"))
+        self.credit_label.grid(row=2, column=0, columnspan=2, sticky="e", pady=(4, 0))
+        self.credit_label.bind("<Button-1>", lambda e: webbrowser.open(CREDIT_URL))
+        self.credit_label.bind("<Enter>", lambda e: self.credit_label.configure(fg=self.TEXT))
+        self.credit_label.bind("<Leave>", lambda e: self.credit_label.configure(fg=self.ACCENT))
 
         # 拖放区
         drop_h = int(64 * self._ui_scale()) + 12
@@ -1452,6 +1468,21 @@ class App(object):
         self._draw_drop_zone()
         self._save_cfg()
 
+    def _gpu_text(self, name, vendor):
+        """显卡名 + 厂商标签，超宽时只截显卡名，厂商标签一定保留。"""
+        tag = VENDOR_LABEL.get(vendor, "")
+        suffix = (" · " + tag) if tag else ""
+        if not hasattr(self, "_gpu_font"):
+            self._gpu_font = tkfont.Font(font=("Microsoft YaHei UI", 9))
+        limit = int(300 * self._ui_scale())   # 为标题留出空间
+        avail = limit - self._gpu_font.measure(suffix)
+        if self._gpu_font.measure(name) <= avail:
+            return name + suffix
+        cut = name
+        while cut and self._gpu_font.measure(cut + "…") > avail:
+            cut = cut[:-1]
+        return (cut + "…" + suffix) if cut else suffix.lstrip(" ·")
+
     def _refresh_gpu_info(self):
         def work():
             try:
@@ -1459,13 +1490,7 @@ class App(object):
                     None if self.vendor == "auto" else self.vendor))
             except Exception:
                 chosen, name = self.vendor_eff, self.gpu_name
-            txt = name
-            tag = VENDOR_LABEL.get(chosen, "")
-            if tag:
-                txt = "%s · %s" % (name, tag)
-            if len(txt) > 32:
-                txt = txt[:30] + "…"   # 长显卡名会顶宽标题栏
-            self.queue.put(("gpu", txt))
+            self.queue.put(("gpu", (name, chosen)))
         threading.Thread(target=work, daemon=True).start()
 
     # ---------- 运行 ----------
@@ -1535,7 +1560,8 @@ class App(object):
                         self.tasks[idx].status = "转码中 %.0f%%" % pct
                         self._refresh_row(idx)
                 elif kind == "gpu":
-                    self.gpu_label.configure(text=ev[1])
+                    name, chosen = ev[1]
+                    self.gpu_label.configure(text=self._gpu_text(name, chosen))
                 elif kind == "enc_check":
                     vendor, ok, err = ev[1]
                     self._on_enc_check(vendor, ok, err)
