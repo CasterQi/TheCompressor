@@ -70,7 +70,7 @@ Constant quality (CQ / CRF) works the other way: you set how much distortion is 
 
 **中文**
 
-1. 到 [Releases](../../releases) 下载 `TheCompressor.exe`，双击运行（首次启动会自解压内置 ffmpeg，两秒左右）。
+1. 到 [Releases](https://github.com/CasterQi/TheCompressor/releases/latest) 下载 `TheCompressor.exe`，双击运行（首次启动会自解压内置 ffmpeg，两秒左右）。
 2. 把视频拖进虚线框，或者点虚线框用文件对话框选。
 3. CQ 先留在 21 试一条，觉得画质不够就往左滑，觉得文件太大就往右滑。
 4. 点「开始转码」。跑完在列表的「状态」列看结果，比如 `完成 省 60%`。
