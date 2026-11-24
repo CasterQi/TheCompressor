@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 """TheCompressor -- 批量视频压缩
 用显卡硬件编码器的恒定质量模式压缩视频：
 NVIDIA 走 NVENC（vbr + cq），Intel 走 QSV（global_quality）。
@@ -990,7 +990,7 @@ class App(object):
         outer = tk.Frame(self.root, bg=self.BG)
         sc_pad = int(18 * self._ui_scale())
         outer.pack(fill="both", expand=True, padx=sc_pad,
-                   pady=(int(16 * self._ui_scale()), int(14 * self._ui_scale())))
+                   pady=(int(12 * self._ui_scale()), int(14 * self._ui_scale())))
         outer.columnconfigure(0, weight=1)
 
         # 头部
