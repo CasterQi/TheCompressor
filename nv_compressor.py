@@ -1002,13 +1002,13 @@ class App(object):
                                    style="Sub.TLabel")
         self.sub_label.grid(row=1, column=0, sticky="w", pady=(2, 0))
         self.gpu_label = ttk.Label(head, text="", style="Sub.TLabel")
-        self.gpu_label.grid(row=0, column=1, rowspan=2, sticky="e")
+        self.gpu_label.grid(row=0, column=1, sticky="e")
 
-        # 右下角署名，点击打开 B 站主页
+        # 署名与副标题同行，点击打开 B 站主页
         self.credit_label = tk.Label(head, text=CREDIT_TEXT, bg=self.BG,
                                      fg=self.ACCENT, cursor="hand2",
                                      font=("Microsoft YaHei UI", 8, "underline"))
-        self.credit_label.grid(row=2, column=0, columnspan=2, sticky="e", pady=(4, 0))
+        self.credit_label.grid(row=1, column=1, sticky="e", padx=(14, 0), pady=(5, 0))
         self.credit_label.bind("<Button-1>", lambda e: webbrowser.open(CREDIT_URL))
         self.credit_label.bind("<Enter>", lambda e: self.credit_label.configure(fg=self.TEXT))
         self.credit_label.bind("<Leave>", lambda e: self.credit_label.configure(fg=self.ACCENT))
