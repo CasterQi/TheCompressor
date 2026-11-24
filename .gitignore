@@ -1,0 +1,17 @@
+# 绿色打包目录（源码在仓库根目录，这里只放虚拟环境与产物）/ local build dir
+_build/
+__pycache__/
+*.pyc
+
+# 内置 ffmpeg 与成品 exe 不进仓库 / bundled ffmpeg and built exe
+ffmpeg.exe
+*.exe
+config.json
+
+# 素材与文稿 / local footage and scripts
+视频素材/
+*.docx
+*.log
+/花生AI-偏好设置.txt
+/TheCompressor-口播稿.txt
+/TheCompressor-使用说明.txt
