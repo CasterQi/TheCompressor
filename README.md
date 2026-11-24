@@ -72,14 +72,14 @@ Constant quality (CQ / CRF) works the other way: you set how much distortion is 
 
 1. 到 [Releases](https://github.com/CasterQi/TheCompressor/releases/latest) 下载 `TheCompressor.exe`，双击运行（首次启动会自解压内置 ffmpeg，两秒左右）。
 2. 把视频拖进虚线框，或者点虚线框用文件对话框选。
-3. CQ 先留在 21 试一条，觉得画质不够就往左滑，觉得文件太大就往右滑。
+3. CQ 先留在 23 试一条，觉得画质不够就往左滑，觉得文件太大就往右滑。
 4. 点「开始转码」。跑完在列表的「状态」列看结果，比如 `完成 省 60%`。
 
 **English**
 
 1. Grab `TheCompressor.exe` from [Releases](../../releases) and double-click it (the bundled ffmpeg unpacks itself on first launch, about two seconds).
 2. Drag your videos into the dashed area, or click it to use a file dialog.
-3. Leave CQ at 21 for the first clip — slide left if quality is not enough, right if the file is still too big.
+3. Leave CQ at 23 for the first clip — slide left if quality is not enough, right if the file is still too big.
 4. Hit **Start**. The status column reports the result, e.g. `完成 省 60%` (done, 60% smaller).
 
 ---
@@ -91,18 +91,17 @@ Constant quality (CQ / CRF) works the other way: you set how much distortion is 
 | 16 | 极致画质，体积最大 | Maximum quality, largest files |
 | 17–18 | 高画质 | High quality |
 | 19–20 | 偏画质 | Quality-leaning |
-| 21–23 | 均衡，推荐 | Balanced, recommended |
-| 24–25 | 偏体积 | Size-leaning |
+| 21–25 | 均衡，推荐 | Balanced, recommended |
 | 26–27 | 小体积 | Small files |
 | 28–30 | 最小体积 | Smallest files |
 
 **中文**
 
-默认 21，对标 `x265 -crf 21`。归档素材用 18～20，发到网上给人看的用 23～25，只是想省硬盘的用 26 以上。数值每加 6，文件大约小一半，画质下降开始变得肉眼可见。
+默认 23，对标 `x265 -crf 23` 左右。归档素材用 21～22，发到网上给人看的用 24～25，只是想省硬盘的用 26 以上。数值每加 6，文件大约小一半，画质下降开始变得肉眼可见。
 
 **English**
 
-The default is 21, equivalent to `x265 -crf 21`. Use 18–20 for material you want to archive, 23–25 for clips you upload and watch on a screen, 26+ when you just want the disk space back. Every +6 in CQ roughly halves the file size, and the quality loss starts to become visible.
+The default is 23, roughly `x265 -crf 23`. Use 21–22 for material you want to archive, 24–25 for clips you upload and watch on a screen, 26+ when you just want the disk space back. Every +6 in CQ roughly halves the file size, and the quality loss starts to become visible.
 
 ---
 

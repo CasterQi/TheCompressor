@@ -848,7 +848,7 @@ class App(object):
 
     # ---------- 配置 ----------
     def _load_cfg(self):
-        default = {"cq": 21, "codec": "h264", "preset": "rec", "container": "mp4",
+        default = {"cq": 23, "codec": "h264", "preset": "rec", "container": "mp4",
                    "audio": "copy", "hwaccel": True, "keep_res": True,
                    "res_height": 1080, "last_dir": "", "vendor": "auto"}
         try:
@@ -1205,7 +1205,7 @@ class App(object):
         try:
             cq = int(self.var_cq.get())
         except Exception:
-            cq = 21
+            cq = 23
         c.create_text(w // 2, int(h * 0.84), text="输出到原视频所在目录，文件名追加 _cq%d" % cq,
                       fill="#6c7585", font=("Microsoft YaHei UI", 8))
 
@@ -1354,7 +1354,7 @@ class App(object):
 
     def _cq_rating(self, v):
         quality = {16: "极致", 17: "极高", 18: "超高", 19: "次高", 20: "标高",
-                   21: "高", 22: "较高", 23: "中等", 24: "中等偏下", 25: "一般",
+                   21: "高", 22: "较高", 23: "中等", 24: "中等", 25: "中等偏下",
                    26: "偏低", 27: "较低", 28: "低", 29: "很低", 30: "最低"}
         size = {16: "最大", 17: "很大", 18: "偏大", 19: "稍大", 20: "中等偏大",
                 21: "适中", 22: "适中", 23: "适中", 24: "偏小", 25: "较小",
@@ -1365,10 +1365,8 @@ class App(object):
             tag = "高画质"
         elif v <= 20:
             tag = "偏画质"
-        elif v <= 23:
-            tag = "均衡推荐"
         elif v <= 25:
-            tag = "偏体积"
+            tag = "均衡推荐"
         elif v <= 27:
             tag = "小体积"
         else:
@@ -1392,7 +1390,7 @@ class App(object):
         try:
             v = int(self.var_cq.get())
         except Exception:
-            v = 21
+            v = 23
         q, s, tag = self._cq_rating(v)
         self.lbl_cq.configure(text=str(v))
         self.lbl_cq_tag.configure(text=tag)
@@ -1405,7 +1403,7 @@ class App(object):
         try:
             v = int(round(float(self.var_cq.get())))
         except Exception:
-            v = 21
+            v = 23
         v = max(16, min(30, v))
         self.var_cq.set(v)
         self._on_opt_change()
@@ -1440,8 +1438,8 @@ class App(object):
         try:
             self.cfg["cq"] = max(16, min(30, int(self.var_cq.get())))
         except Exception:
-            self.cfg["cq"] = 21
-            self.var_cq.set(21)
+            self.cfg["cq"] = 23
+            self.var_cq.set(23)
         self._refresh_cq_rating()
         self.cfg["codec"] = self.var_codec.get() or "h264"
         self.cfg["preset"] = self._preset_level()
@@ -1628,7 +1626,7 @@ def selftest(src, out_log):
     info = probe(src)
     w("probe: %s" % info)
 
-    opt = {"cq": 21, "codec": "h264", "preset": "p6", "container": "mp4",
+    opt = {"cq": 23, "codec": "h264", "preset": "p6", "container": "mp4",
            "audio": "copy", "hwaccel": True, "keep_res": True,
            "res_height": 1080}
     dst = os.path.splitext(src)[0] + "_selftest.mp4"
