@@ -1014,7 +1014,7 @@ class App(object):
         self.credit_label.bind("<Leave>", lambda e: self.credit_label.configure(fg=self.ACCENT))
 
         # 拖放区
-        drop_h = int(64 * self._ui_scale()) + 12
+        drop_h = int(48 * self._ui_scale()) + 10
         self.drop_canvas = tk.Canvas(outer, height=drop_h, bg=self.CARD, highlightthickness=0,
                                      bd=0, cursor="hand2")
         self.drop_canvas.grid(row=1, column=0, sticky="ew", pady=(14, 12))
@@ -1214,16 +1214,11 @@ class App(object):
         c.delete("all")
         col = self.ACCENT if self._drop_hot else "#39404d"
         c.create_rectangle(6, 6, w - 6, h - 6, outline=col, width=2, dash=(7, 5))
-        c.create_text(w // 2, int(h * 0.30), text="把视频拖到这里",
+        c.create_text(w // 2, int(h * 0.32), text="把视频拖到这里",
                       fill=self.TEXT, font=("Microsoft YaHei UI", 13, "bold"))
-        c.create_text(w // 2, int(h * 0.58), text="支持多文件 / 文件夹 · 或点击选择文件",
+        c.create_text(w // 2, int(h * 0.72),
+                      text="支持多文件 / 文件夹 · 或点击选择文件 · 输出到原视频所在目录",
                       fill=self.MUTED, font=("Microsoft YaHei UI", 9))
-        try:
-            cq = int(self.var_cq.get())
-        except Exception:
-            cq = 23
-        c.create_text(w // 2, int(h * 0.84), text="输出到原视频所在目录，文件名追加 _cq%d" % cq,
-                      fill="#6c7585", font=("Microsoft YaHei UI", 8))
 
     def _on_drop_enter(self, event):
         self._drop_hot = True
